@@ -1,0 +1,164 @@
+:root {
+    --snake-color: blueviolet;
+    --food-color: black;
+    --grid-color: silver;
+    --cells-bg: white;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    padding: 5px;
+    font-family: monospace;
+}
+fieldset {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+}
+.form-row {
+    margin-bottom: 10px;
+}
+label {
+    display: inline-block;
+    width: 100px;
+}
+input {
+    padding: 2px 5px;
+    width: 200px;
+}
+input[type="button"] {
+    cursor: pointer;
+}
+.fieldset-advanced input {
+    width: 168px;
+}
+.form-buttons-container {
+    text-align: center;
+}
+.dashboard {
+    font-size: 18px;
+}
+.indicator {
+    display: inline-block;
+    width: 30%;
+}
+#maze {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 3px;
+}
+.row {
+    display: flex;
+}
+.cell {
+    flex: 1;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--grid-color);
+    box-sizing: border-box;
+    position: relative;
+    background-color: var(--cells-bg);
+}
+.snake {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    background-color: var(--snake-color);
+    position: absolute;
+}
+.snake.dead {
+    background-color: red;
+}
+.food {
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    background-color: var(--food-color);
+}
+
+.form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(192, 192, 192, 0.3);
+}
+form {
+    position: fixed;
+    padding: 10px;
+    background-color: aliceblue;
+    border-radius: 10px;
+    box-shadow: 0 0 15px black;
+}
+#form-game-over h1 {
+    margin: 10px 30px;
+    color: red;
+}
+.color-indicator {
+    display: inline-block;
+    position: relative;
+    top: 6px;
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+.color-sample-row {
+    margin-bottom: 5px;
+    text-align: center;
+}
+.color-sample {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border: 1px solid black;
+    cursor: pointer;
+    box-shadow: 0 0 3px black;
+}
+.color-sample:last-child {
+    margin-right: 0;
+}
+.color-picker-input-rgb-container {
+    text-align: center;
+}
+.color-picker-input-rgb {
+    display: inline-block;
+    margin-top: 10px;
+}
+.color-picker-input-rgb label {
+    width: 15px;
+}
+.color-picker-input-rgb input {
+    width: 40px;
+}
+#form-color-picker .form-buttons-container {
+    margin-top: 10px;
+}
+
+#form-game-over .form-buttons-container {
+    margin-top: 10px;
+}
+#form-game-over table {
+    border-collapse: collapse;
+}
+#form-game-over th {
+    text-align: left;
+}
+#form-game-over th {
+    padding-right: 10px;
+}
+#form-game-over td {
+    padding-right: 30px;
+}
+#form-game-over tr.you td {
+    background-color: lightpink;
+}

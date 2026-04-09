@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Snake</title>
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="snake.css" />
+    <script type="module" src="app.js"></script>
+</head>
+
+<body>
+    <div class="dashboard">
+        <div class="indicator hiscore">HI-SCORE: <span class="hiscore-value">-</span></div>
+        <div class="indicator score">SCORE: <span class="score-value">-</span></div>
+        <div class="indicator speed">SPEED: <span class="speed-value">-</span></div>
+    </div>
+    <div id="maze"></div>
+    <div class="form-buttons-container">
+        <input id="btn-restart" type="button" value="Restart" />
+    </div>
+    <div class="form-overlay">
+        <form id="form-settings" name="form-settings">
+            <h1>Settings</h1>
+            <fieldset name="settings-main">
+                <legend>Main</legend>
+                
+                <div class="form-row">
+                    <label for="input-username">Name:</label>
+                    <input type="text" id="input-username" name="input-username" value="" disabled />
+                </div>
+
+                <div class="form-row">
+                    <label for="input-speed">Speed:</label>
+                    <input type="number" id="input-speed" name="input-speed" value="" min="1" max="12" disabled />
+                </div>
+            </fieldset>
+            
+            <fieldset name="settings-advanced" class="fieldset-advanced">
+                <legend>Advanced</legend>
+
+                <div class="form-row">
+                    <label for="input-snake-color">Snake color:</label>
+                    <div id="color-indicator-snake" class="color-indicator"></div>
+                    <input type="text" id="input-snake-color" name="input-snake-color" value="blueviolet" disabled />
+                </div>
+
+                <div class="form-row">
+                    <label for="input-food-color">Food color:</label>
+                    <div id="color-indicator-food" class="color-indicator"></div>
+                    <input type="text" id="input-food-color" name="input-food-color" value="black" disabled />
+                </div>
+
+                <div class="form-row">
+                    <label for="input-grid-color">Grid color:</label>
+                    <div id="color-indicator-grid" class="color-indicator"></div>
+                    <input type="text" id="input-grid-color" name="input-grid-color" value="silver" disabled />
+                </div>
+
+                <div class="form-row">
+                    <label for="input-cells-bg">Cells color:</label>
+                    <div id="color-indicator-cells-bg" class="color-indicator"></div>
+                    <input type="text" id="input-cells-bg" name="input-cells-bg" value="white" disabled />
+                </div>
+                
+                <input type="button" id="btn-default-colors" name="btn-default-colors" value="Set default colors" disabled />
+            </fieldset>
+
+            <div class="form-buttons-container">
+                <input type="button" id="btn-play" name="btn-play" value="Play!" disabled />
+            </div>
+        </form>
+    </div>
+    
+    <div class="form-overlay" hidden>
+        <form id="form-color-picker" name="form-color-picker">
+            <div class="color-sample-container"></div>
+            <hr />
+            <div class="color-picker-input-rgb-container">
+                <div class="color-picker-input-rgb">
+                    <label for="input-color-r">R:</label>
+                    <input id="input-color-r" name="input-color-r" type="number" value="0" />
+                </div>
+                <div class="color-picker-input-rgb">
+                    <label for="input-color-g">G:</label>
+                    <input id="input-color-g" name="input-color-g" type="number" value="0" />
+                </div>
+                <div class="color-picker-input-rgb">
+                    <label for="input-color-b">B:</label>
+                    <input id="input-color-b" name="input-color-b" type="number" value="0" />
+                </div>
+                <div class="form-buttons-container">
+                    <div class="color-indicator"></div>
+                    <input id="btn-select-color" name="btn-select-color" type="button" value="Select" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="form-overlay" hidden>
+        <form id="form-game-over" name="form-game-over">
+            <h1>G A M E&nbsp;&nbsp;&nbsp;O V E R</h1>
+            <hr />
+            <h2>Leaders</h2>
+            <hr />
+            <div class="score-table-container"></div>
+            <hr />
+            <div class="form-buttons-container">
+                <input type="button" id="btn-play-again" name="btn-play-again" value="Play again!" />
+            </div>
+        </form>
+    </div>
+</body>
+</html>

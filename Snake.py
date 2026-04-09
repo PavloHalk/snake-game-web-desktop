@@ -1,0 +1,42 @@
+import webview
+import os
+import sys
+import json
+
+class Api:
+    def save_data(self, data_json):
+        with open("snakedata.json", "w") as f:
+            f.write(data_json)
+        return "Збережено!"
+
+    def load_data(self):
+        if os.path.exists("snakedata.json"):
+            with open("snakedata.json", "r") as f:
+                return f.read()
+        return "{}"
+
+# Функція для правильного визначення шляху до файлів (важливо для .exe)
+def get_resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
+api = Api()
+
+# Вказуємо шлях до твого HTML файлу
+html_file = get_resource_path('snake.html')
+
+# Створюємо вікно додатка
+window = webview.create_window(
+    'Snake', # Заголовок вікна
+    html_file,           # Шлях до файлу
+    width=1000,          # Ширина
+    height=700,          # Висота
+    js_api=api
+)
+
+# Запуск
+webview.start(http_server=True, debug=False)
+
+# compilation to exe
+# pyinstaller --noconsole --onefile --add-data "snake.html;." --add-data "snake.css;." --add-data "app.js;." --add-data "favicon.ico;." --add-data "pyStorage.js;." --add-data "forms.js;." --add-data "csscolors.js;." --version-file=version.txt Snake.py --icon="favicon.ico"
