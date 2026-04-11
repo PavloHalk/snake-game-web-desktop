@@ -1,13 +1,7 @@
-# Папки PyInstaller
 build/
 dist/
-
-# Папки створені IDE
+dev/
 .idea/
-
-# Файли конфігурації
 *.spec
-
-# Виконувані файли
 *.exe
 *.bin

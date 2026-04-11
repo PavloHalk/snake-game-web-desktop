@@ -10,12 +10,13 @@ export default class Snake {
     #vectorCol = 1;
     #maxRow = 0;
     #maxCol = 0;
-    #speed = 1;
     
     #grow = false;
     #isMoveInStep = false;
-    
+
+    #speed = 1;
     #score = 0;
+    
     #boundKeydown = null;
     
     constructor(maze, speed = 1, size = 1) {
@@ -68,7 +69,7 @@ export default class Snake {
     }
     
     #build(size = 1) {
-        //@todo: throw error when maze is too small to place snake.
+        //@todo: Throw error when maze is too small to place snake.
         
         for (let i = 0; i < size; i++) {
             const el = document.createElement('div');
@@ -92,6 +93,8 @@ export default class Snake {
     }
 
     #step() {
+        //@todo: Improve algorithm. Move only last tail block to the head instead of moving whole snake.
+        
         let current = { row: null, col: null }
         let previous = { row: null, col: null }
 

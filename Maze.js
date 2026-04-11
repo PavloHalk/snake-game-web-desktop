@@ -45,8 +45,11 @@ export default class Maze {
         foodElement.className = 'food';
 
         while (true) {
-            const row = this.#randomInt(0, 19);
-            const col = this.#randomInt(0, 49);
+            //@todo: Exit cycle if there is no more space to place food.
+            //@todo: Improve algorithm. Exclude cells with snake and food before choosing cell to put food. 
+            
+            const row = this.#randomInt(0, this.#rowsCount - 1);
+            const col = this.#randomInt(0, this.#colsCount - 1);
 
             if (this.mazeArr[row][col].querySelector('.snake') || this.mazeArr[row][col].querySelector('.food')) {
                 continue;
