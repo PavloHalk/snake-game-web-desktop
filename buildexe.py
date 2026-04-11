@@ -5,6 +5,8 @@ command = (
     '--add-data "snake.html;." '
     '--add-data "snake.css;." '
     '--add-data "app.js;." '
+    '--add-data "Maze.js;." '
+    '--add-data "Snake.js;." '
     '--add-data "favicon.ico;." '
     '--add-data "pyStorage.js;." '
     '--add-data "forms.js;." '

@@ -15,7 +15,7 @@ class Api:
                 return f.read()
         return "{}"
 
-# Функція для правильного визначення шляху до файлів (важливо для .exe)
+# Correct getting file paths (important for exe)
 def get_resource_path(relative_path):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, relative_path)
@@ -23,10 +23,8 @@ def get_resource_path(relative_path):
 
 api = Api()
 
-# Вказуємо шлях до твого HTML файлу
 html_file = get_resource_path('snake.html')
 
-# Створюємо вікно додатка
 window = webview.create_window(
     'Snake', # Заголовок вікна
     html_file,           # Шлях до файлу
@@ -35,7 +33,6 @@ window = webview.create_window(
     js_api=api
 )
 
-# Запуск
 webview.start(http_server=True, debug=False)
 
 # compilation to exe

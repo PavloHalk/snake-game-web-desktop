@@ -14,7 +14,7 @@ file!
 
 #### As web page
 
-1. Create a directory for a project and set up a web server for it (JavaScript will not work if you just open `index.html` as a file because ES modules are used).
+1. Create a directory for a project and set up a web server for it (JavaScript will not work if you just open `snake.html` as a file because ES modules are used).
 2. Go inside directory and clone repository: `git clone https://github.com/PavloHalk/snake-game-web-desktop`
 3. Open the page you set up on step 1 in your browser.
 4. Enjoy.
@@ -39,4 +39,4 @@ The idea of this project hit my head when I was reviewing what I
 learned a long time ago about programming in JavaScript. The purpose was to
 remember how to work with DOM, and I'd like to create something for my kids.
 
-P.S. They were happy to play dad's snake.
+P.S. They were happy to play dad's game.
