@@ -164,6 +164,7 @@ export default class Snake {
             this.#grow = false;
         }
 
+        this.#maze.checkFoods();
         this.#maze.placeFoodInRandomTime();
     }
     

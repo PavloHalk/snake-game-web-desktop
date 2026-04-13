@@ -11,6 +11,7 @@ command = (
     '--add-data "pyStorage.js;." '
     '--add-data "forms.js;." '
     '--add-data "csscolors.js;." '
+    '--add-data "Food.js";. '
     '--version-file=version.txt '
     '--icon="favicon.ico" '
     'Snake.py'

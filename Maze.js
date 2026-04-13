@@ -1,7 +1,9 @@
+import Food from './Food.js';
+
 export default class Maze {
     mazeArr = [];
     #mazeContainer = null;
-    #foodCount = 0;
+    #foods = [];
     
     #rowsCount = 0;
     #colsCount = 0;
@@ -39,10 +41,9 @@ export default class Maze {
             this.mazeArr[snakePart.row][snakePart.col].append(snakePart.el);
         }
     }
-
+    
     placeFood() {
-        const foodElement = document.createElement('div');
-        foodElement.className = 'food';
+        const food = new Food(this.#randomInt(5, 100));
 
         while (true) {
             //@todo: Exit cycle if there is no more space to place food.
@@ -55,35 +56,41 @@ export default class Maze {
                 continue;
             }
 
-            this.mazeArr[row][col].append(foodElement);
-            this.#foodCount++;
+            this.mazeArr[row][col].append(food.getElement());
+            this.#foods.push(food);
 
             break;
         }
     }
+    
+    checkFoods() {
+        this.#foods = this.#foods.filter(food => food && !food.rot());
+    }
 
     placeFoodInRandomTime() {
         if (
-            this.#foodCount === 0 && this.#randomInt(0, 1) === 0 ||
-            this.#foodCount === 1 && this.#randomInt(0, 160) === 0 ||
-            this.#foodCount === 2 && this.#randomInt(0, 300) === 0 ||
-            this.#foodCount === 3 && this.#randomInt(0, 500) === 0 ||
-            this.#foodCount === 4 && this.#randomInt(0, 700) === 0 ||
-            this.#foodCount === 5 && this.#randomInt(0, 1000) === 0 ||
-            this.#foodCount === 6 && this.#randomInt(0, 8000) === 0 ||
-            this.#foodCount === 7 && this.#randomInt(0, 25000) === 0 ||
-            this.#foodCount === 8 && this.#randomInt(0, 50000) === 0 ||
-            this.#foodCount === 9 && this.#randomInt(0, 100000) === 0
+            this.#foods.length === 0 && this.#randomInt(0, 1) === 0 ||
+            this.#foods.length === 1 && this.#randomInt(0, 100) === 0 ||
+            this.#foods.length === 2 && this.#randomInt(0, 200) === 0 ||
+            this.#foods.length === 3 && this.#randomInt(0, 300) === 0 ||
+            this.#foods.length === 4 && this.#randomInt(0, 500) === 0 ||
+            this.#foods.length === 5 && this.#randomInt(0, 750) === 0 ||
+            this.#foods.length === 6 && this.#randomInt(0, 1500) === 0 ||
+            this.#foods.length === 7 && this.#randomInt(0, 3000) === 0 ||
+            this.#foods.length === 8 && this.#randomInt(0, 5000) === 0 ||
+            this.#foods.length === 9 && this.#randomInt(0, 10000) === 0
         ) {
             this.placeFood();
         }
     }
     
     removeFood(row, col) {
-        const food = this.mazeArr[row][col].querySelector('.food');
-        if (food) {
-            food.remove();
-            this.#foodCount--;
+        const foodElement = this.mazeArr[row][col].querySelector('.food');
+        if (foodElement) {
+            foodElement.remove();
+
+            this.#foods = this.#foods.map(food => food.getId().toString() !== foodElement.dataset.foodId ? food : null);
+            this.#foods = this.#foods.filter(food => food);
             
             return true;
         }
