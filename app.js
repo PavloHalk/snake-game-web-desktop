@@ -119,8 +119,8 @@ function play(snake) {
     speed = parseInt(formSettings.elements['input-speed'].value);
     if (!speed) {
         speed = 1;
-    } else if (speed > 12 && speed !== 67) {
-        speed = 12;
+    } else if (speed > 10) {
+        speed = 10;
     }
     snake.setSpeed(speed);
     

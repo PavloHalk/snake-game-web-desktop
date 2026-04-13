@@ -21,11 +21,11 @@ export default class Snake {
     
     constructor(maze, speed = 1, size = 1) {
         if (!(maze instanceof Maze)) throw new TypeError('maze must be instance of Maze.');
-        if (speed < 1 || speed > 12) throw new RangeError('Speed should be a number between 1 and 12');
+        if (speed < 1 || speed > 10) throw new RangeError('Speed should be a number between 1 and 10');
         if (size < 1) throw new  RangeError('Snake size should be at least 1.');
         
         this.#maze = maze;
-        this.#speed = Math.floor(speed);
+        this.setSpeed(speed);
         this.#maxRow = maze.getRowsCount() - 1;
         this.#maxCol = maze.getColsCount() - 1;
         
@@ -41,7 +41,7 @@ export default class Snake {
     
     go() {
         document.addEventListener('keydown', this.#boundKeydown);
-        this.#interval = setInterval(this.#step.bind(this), 1000 * (1 / this.#speed));
+        this.#interval = setInterval(this.#step.bind(this), Math.round(600 * Math.pow(0.75, this.#speed - 1)));
     }
     
     stop() {
@@ -55,8 +55,8 @@ export default class Snake {
     setSpeed(speed) {
         if (speed < 1) {
             speed = 1;
-        } else if (speed > 12) {
-            speed = 12;
+        } else if (speed > 10) {
+            speed = 10;
         }
         
         this.#speed = Math.floor(speed);
@@ -77,15 +77,15 @@ export default class Snake {
 
             this.#body.push({
                 el: el,
-                row: this.#maze.getRowsCount() / 2 - 1,
-                col: this.#maze.getColsCount() / 2 - i
+                row: Math.floor(this.#maze.getRowsCount() / 2) - 1,
+                col: Math.floor(this.#maze.getColsCount() / 2) - i
             });
         }
     }
     
     #eat(row, col) {
         if (this.#maze.removeFood(row, col)) {
-            this.#score = this.#score + Math.round((this.#speed > 12 ? 13 : this.#speed) * 1.3);
+            this.#score = this.#score + Math.round(1.7 * Math.pow(this.#speed, 1.4));
             this.#grow = true;
             
             this.#emit('snake-eat');

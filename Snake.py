@@ -26,10 +26,10 @@ api = Api()
 html_file = get_resource_path('snake.html')
 
 window = webview.create_window(
-    'Snake', # Заголовок вікна
-    html_file,           # Шлях до файлу
-    width=1000,          # Ширина
-    height=700,          # Висота
+    'Snake',
+    html_file,
+    width=1000,
+    height=700,
     js_api=api
 )
 

@@ -1,8 +1,8 @@
 # VSVersionInfo file
 VSVersionInfo(
   ffi=FixedFileInfo(
-    filevers=(1, 0, 1, 0),  # Версія файлу (кортеж із 4 чисел)
-    prodvers=(1, 0, 1, 0),  # Версія продукту
+    filevers=(1, 1, 0, 0),  # Версія файлу (кортеж із 4 чисел)
+    prodvers=(1, 1, 0, 0),  # Версія продукту
     mask=0x3f,
     flags=0x0,
     OS=0x40004,
@@ -18,12 +18,12 @@ VSVersionInfo(
 		u'040904b0', # Код мови (Англійська)
         [StringStruct(u'CompanyName', u'Pavlo Halkovsky'),
         StringStruct(u'FileDescription', u'Snake game'),
-        StringStruct(u'FileVersion', u'1.0.1'),
+        StringStruct(u'FileVersion', u'1.1.0'),
         StringStruct(u'InternalName', u'snake'),
         StringStruct(u'LegalCopyright', u'Pavlo Halkovsky © 2026 All rights reserved'),
         StringStruct(u'OriginalFilename', u'Snake.exe'),
         StringStruct(u'ProductName', u'Snake game'),
-        StringStruct(u'ProductVersion', u'1.0.1')])
+        StringStruct(u'ProductVersion', u'1.1.0')])
       ]), 
     #VarFileInfo([VarStruct(u'Translation', [1058, 1200])]) # Коди для UA мови
 	VarFileInfo([VarStruct(u'Translation', [1033, 1200])]) # Коди для EN мови

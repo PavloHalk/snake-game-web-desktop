@@ -34,7 +34,7 @@ export default class Maze {
         for (const snakePartElement of this.#mazeContainer.querySelectorAll('.snake')) {
             snakePartElement.remove();
         }
-
+        
         for (const snakePart of snake.getBody()) {
             this.mazeArr[snakePart.row][snakePart.col].append(snakePart.el);
         }
