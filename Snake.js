@@ -87,8 +87,6 @@ export default class Snake {
         if (this.#maze.removeFood(row, col)) {
             this.#score = this.#score + Math.round(1.7 * Math.pow(this.#speed, 1.4));
             this.#grow = true;
-            
-            this.#emit('snake-eat');
         }
     }
     
@@ -144,6 +142,8 @@ export default class Snake {
         this.#body.push({ el: part, row: tailRow, col: tailCol });
         this.#maze.mazeArr[tailRow][tailCol].append(part);
         this.#grow = false;
+        
+        this.#emit('snake-grow');
     }
 
     #keydown(event) {
@@ -171,7 +171,7 @@ export default class Snake {
             bubbles: true,
             detail: {
                 score: this.#score,
-                length: this.#body.length
+                size: this.#body.length
             }
         });
         this.#body[0].el.dispatchEvent(event);

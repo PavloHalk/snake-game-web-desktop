@@ -43,7 +43,7 @@ export default class Maze {
     }
     
     placeFood() {
-        const food = new Food(this.#randomInt(5, 100));
+        const food = new Food(this.#randomInt(10, 120));
 
         while (true) {
             //@todo: Exit cycle if there is no more space to place food.

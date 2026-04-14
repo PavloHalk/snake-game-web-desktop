@@ -55,10 +55,11 @@ export function initColorIndicators() {
     });
 }
 
-export function updateIndicators(speed, score, hiScore) {
+export function updateIndicators(speed, score, hiScore, size) {
     document.querySelector('.speed-value').innerText = speed;
     document.querySelector('.score-value').innerText = score;
     document.querySelector('.hiscore-value').innerText = hiScore;
+    document.querySelector('.size-value').innerText = size;
 }
 
 export function fillColorPicker(formElement) {

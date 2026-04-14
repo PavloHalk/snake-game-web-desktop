@@ -13,6 +13,7 @@ let name = '';
 let speed = 6;
 let hiScore = 0;
 let score = 0;
+let size = 1;
 
 document.addEventListener('DOMContentLoaded', () => {
     const formSettings = document.forms['form-settings'];
@@ -34,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const maze = new Maze(document.getElementById('maze'), 20, 50);
 
-    const snake = new Snake(maze, speed, 1);
+    const snake = new Snake(maze, speed, size);
 
     formSettings.elements['btn-default-colors'].addEventListener('click', () => {
         for (const element of formSettings.elements['settings-advanced'].querySelectorAll('input[type="text"]')) {
@@ -55,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('maze').addEventListener('snake-death', (event) => {
         score = event.detail.score;
         hiScore = score > hiScore ? score : hiScore;
-        updateIndicators(speed, score, hiScore);
+        updateIndicators(speed, score, hiScore, size);
 
         formGameOver.querySelector('table')?.remove();
         putToScoreTable(name, score)
@@ -71,10 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
-    document.getElementById('maze').addEventListener('snake-eat', (event) => {
+    document.getElementById('maze').addEventListener('snake-grow', (event) => {
         score = event.detail.score;
         hiScore = score > hiScore ? score : hiScore;
-        updateIndicators(speed, score, hiScore);
+        size = event.detail.size;
+        updateIndicators(speed, score, hiScore, size);
     });
     
     setTimeout(updateInitialValues, 1000);
@@ -102,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formSettings.elements['input-speed'].removeAttribute('disabled');
             formSettings.elements['btn-default-colors'].removeAttribute('disabled');
             formSettings.elements['btn-play'].removeAttribute('disabled');
-            updateIndicators(speed, score, hiScore);
+            updateIndicators(speed, score, hiScore, size);
         })();
     }
 });
@@ -138,7 +140,7 @@ function play(snake) {
         });
     
     formSettings.closest('.form-overlay').hidden = true;
-    updateIndicators(speed, score, hiScore);
+    updateIndicators(speed, score, hiScore, size);
     snake.go();
 }
 
@@ -148,7 +150,8 @@ function playAgain(snake, maze) {
     placeInScreenCenter(document.forms['form-settings']);
     document.forms['form-settings'].elements['input-username'].focus();
     score = 0;
-    updateIndicators(speed, score, hiScore);
+    size = 1;
+    updateIndicators(speed, score, hiScore, size);
     
     snake.rebuild();
     maze.placeSnake(snake);

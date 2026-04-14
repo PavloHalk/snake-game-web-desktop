@@ -42,7 +42,7 @@ input[type="button"] {
 }
 .indicator {
     display: inline-block;
-    width: 30%;
+    width: 24%;
 }
 #maze {
     margin-top: 20px;
