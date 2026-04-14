@@ -91,83 +91,61 @@ export default class Snake {
             this.#emit('snake-eat');
         }
     }
-
+    
     #step() {
-        //@todo: Improve algorithm. Move only last tail block to the head instead of moving whole snake.
-        
-        let current = { row: null, col: null }
-        let previous = { row: null, col: null }
+        let newRow = this.#body[0].row + this.#vectorRow;
+        let newCol = this.#body[0].col + this.#vectorCol;
 
-        for (const part of this.#body) {
-            if (previous.row === null) {
-                previous.row = part.row;
-                previous.col = part.col;
+        if (newRow > this.#maxRow) {
+            newRow = 0;
+        } else if (newRow < 0) {
+            newRow = this.#maxRow;
+        }
 
-                let newRow = part.row + this.#vectorRow;
-                let newCol = part.col + this.#vectorCol;
+        if (newCol > this.#maxCol) {
+            newCol = 0;
+        } else if (newCol < 0) {
+            newCol = this.#maxCol;
+        }
 
-                if (newRow > this.#maxRow) {
-                    newRow = 0;
-                } else if (newRow < 0) {
-                    newRow = this.#maxRow;
-                }
+        if (this.#maze.mazeArr[newRow][newCol].querySelectorAll('.snake').length) {
+            this.stop();
 
-                if (newCol > this.#maxCol) {
-                    newCol = 0;
-                } else if (newCol < 0) {
-                    newCol = this.#maxCol;
-                }
-
-                if (this.#maze.mazeArr[newRow][newCol].querySelectorAll('.snake').length) {
-                    this.stop();
-
-                    for (const part of this.#body) {
-                        part.el.classList.add('dead');
-                    }
-
-                    this.#emit('snake-death');
-                    
-                    break;
-                }
-
-                part.row = newRow;
-                part.col = newCol;
-
-                this.#eat(part.row, part.col);
-            } else {
-                current.row = part.row;
-                current.col = part.col;
-
-                part.row = previous.row;
-                part.col = previous.col;
-
-                previous.row = current.row;
-                previous.col = current.col;
+            for (const part of this.#body) {
+                part.el.classList.add('dead');
             }
 
-            part.el.remove();
-
-            this.#maze.mazeArr[part.row][part.col].append(part.el);
-            this.#isMoveInStep = false;
+            this.#emit('snake-death');
+            return;
         }
-
-        if (this.#grow) {
-            const part = document.createElement('div');
-            part.className = 'snake';
-
-            this.#body.push({
-                el: part,
-                row: previous.row,
-                col: previous.col
-            });
-            this.#maze.mazeArr[previous.row][previous.col].append(part);
-            this.#grow = false;
-        }
+        
+        this.#body.unshift(this.#body.pop());
+        
+        const tailRow = this.#body[0].row;
+        const tailCol = this.#body[0].col;
+        
+        this.#body[0].row = newRow;
+        this.#body[0].col = newCol;
+        this.#maze.mazeArr[newRow][newCol].append(this.#body[0].el);
+        
+        this.#eat(newRow, newCol);
+        if (this.#grow) this.#growUp(tailRow, tailCol);
 
         this.#maze.checkFoods();
         this.#maze.placeFoodInRandomTime();
+        
+        this.#isMoveInStep = false;
     }
     
+    #growUp(tailRow, tailCol) {
+        const part = document.createElement('div');
+        part.className = 'snake';
+
+        this.#body.push({ el: part, row: tailRow, col: tailCol });
+        this.#maze.mazeArr[tailRow][tailCol].append(part);
+        this.#grow = false;
+    }
+
     #keydown(event) {
         if (this.#isMoveInStep) return;
 
