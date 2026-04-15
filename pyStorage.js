@@ -1,10 +1,35 @@
 /**
  * @file Functions for use storage both in web and in python webview.
  * @module pyStorage
- * @version 0.1.0
- * @date 2026-04-06
+ * @version 0.1.1
+ * @date 2026-04-15
  * @author Pavlo Halkovsky
  */
+
+/**
+ * This promise resolves as soon as pywebview is ready and only if available.
+ * You should build your .exe with the user_agent string as "pywebview-client".
+ * Otherwise, you can edit the code below to fit your user_agent.
+ * 
+ * @type {Promise<boolean>}
+ */
+const pywebviewWaiter = new Promise((resolve, reject) => {
+    if (window.pywebview) resolve(true);
+
+    if (navigator.userAgent === 'pywebview-client') {
+        window.addEventListener('pywebviewready', () => {
+            if (window.pywebview) {
+                resolve(true);
+            } else {
+                reject(new Error('Unexpected error on initializing pywebview.'));
+            }
+        });
+    } else {
+        resolve(false);
+    }
+});
+
+await pywebviewWaiter;
 
 export async function getStorageItem(key, defaultVal) {
     if (window.pywebview) {

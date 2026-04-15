@@ -79,7 +79,7 @@ document.getElementById('maze').addEventListener('snake-grow', (event) => {
     updateIndicators(speed, score, hiScore, size);
 });
 
-setTimeout(updateInitialValues, 1000);
+updateInitialValues();
 
 function updateInitialValues () {
     (async () => {
