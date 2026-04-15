@@ -15,99 +15,98 @@ let hiScore = 0;
 let score = 0;
 let size = 1;
 
-document.addEventListener('DOMContentLoaded', () => {
-    const formSettings = document.forms['form-settings'];
-    const formGameOver = document.forms['form-game-over'];
-    const formColorPicker = document.forms['form-color-picker'];
-    
-    fillColorPicker(formColorPicker);
-    initColorPicker(formColorPicker);
-    
+const formSettings = document.forms['form-settings'];
+const formGameOver = document.forms['form-game-over'];
+const formColorPicker = document.forms['form-color-picker'];
+
+fillColorPicker(formColorPicker);
+initColorPicker(formColorPicker);
+
+placeInScreenCenter(formSettings);
+placeInScreenCenter(formGameOver);
+placeInScreenCenter(formColorPicker);
+window.addEventListener('resize', () => {
     placeInScreenCenter(formSettings);
     placeInScreenCenter(formGameOver);
     placeInScreenCenter(formColorPicker);
-    window.addEventListener('resize', () => {
-        placeInScreenCenter(formSettings);
-        placeInScreenCenter(formGameOver);
-        placeInScreenCenter(formColorPicker);
-    });
-    initColorIndicators();
-    
-    const maze = new Maze(document.getElementById('maze'), 20, 50);
+});
+initColorIndicators();
 
-    const snake = new Snake(maze, speed, size);
+const maze = new Maze(document.getElementById('maze'), 20, 50);
 
-    formSettings.elements['btn-default-colors'].addEventListener('click', () => {
-        for (const element of formSettings.elements['settings-advanced'].querySelectorAll('input[type="text"]')) {
-            element.value = element.defaultValue;
-            element.dispatchEvent(new Event('input'));
-        }
-    });
-    formSettings.elements['btn-play'].addEventListener('click', () => {
-        play(snake);
-    });
-    formGameOver.elements['btn-play-again'].addEventListener('click', () => {
-        playAgain(snake, maze);
-    });
-    document.getElementById('btn-restart').addEventListener('click', () => {
-        restart(snake, maze);
-    });
+const snake = new Snake(maze, speed, size);
 
-    document.getElementById('maze').addEventListener('snake-death', (event) => {
-        score = event.detail.score;
-        hiScore = score > hiScore ? score : hiScore;
-        updateIndicators(speed, score, hiScore, size);
-
-        formGameOver.querySelector('table')?.remove();
-        putToScoreTable(name, score)
-            .then(() => {
-                return buildScoreTableElement();
-            })
-            .then(table => {
-                formGameOver.querySelector('.score-table-container').append(table);
-            })
-            .finally(() => {
-                formGameOver.closest('.form-overlay').hidden = false;
-                placeInScreenCenter(formGameOver);
-            });
-    });
-
-    document.getElementById('maze').addEventListener('snake-grow', (event) => {
-        score = event.detail.score;
-        hiScore = score > hiScore ? score : hiScore;
-        size = event.detail.size;
-        updateIndicators(speed, score, hiScore, size);
-    });
-    
-    setTimeout(updateInitialValues, 1000);
-
-    function updateInitialValues () {
-        (async () => {
-            name = await getStorageItem('last-user-name', 'Anonymous');
-            speed = await getStorageItem('last-speed', '6');
-            hiScore = (await getScoreTable())[0]?.score ?? 0;
-            const colors = await getStorageItem('colors', {});
-            
-            formSettings.elements['input-username'].value = name;
-            formSettings.elements['input-speed'].value = speed;
-            
-            for (const elementName in colors) {
-                formSettings.elements[elementName].value = colors[elementName];
-                formSettings.elements[elementName].dispatchEvent(new Event('input'));
-            }
-            for (const element of formSettings.elements['settings-advanced'].querySelectorAll('input[type="text"]')) {
-                element.removeAttribute('disabled');
-            }
-            
-            formSettings.elements['input-username'].removeAttribute('disabled');
-            formSettings.elements['input-username'].focus();
-            formSettings.elements['input-speed'].removeAttribute('disabled');
-            formSettings.elements['btn-default-colors'].removeAttribute('disabled');
-            formSettings.elements['btn-play'].removeAttribute('disabled');
-            updateIndicators(speed, score, hiScore, size);
-        })();
+formSettings.elements['btn-default-colors'].addEventListener('click', () => {
+    for (const element of formSettings.elements['settings-advanced'].querySelectorAll('input[type="text"]')) {
+        element.value = element.defaultValue;
+        element.dispatchEvent(new Event('input'));
     }
 });
+formSettings.addEventListener('submit', (event) => {
+    event.preventDefault();
+    play(snake);
+});
+formGameOver.elements['btn-play-again'].addEventListener('click', () => {
+    playAgain(snake, maze);
+});
+document.getElementById('btn-restart').addEventListener('click', () => {
+    restart(snake, maze);
+});
+
+document.getElementById('maze').addEventListener('snake-death', (event) => {
+    score = event.detail.score;
+    hiScore = score > hiScore ? score : hiScore;
+    updateIndicators(speed, score, hiScore, size);
+
+    formGameOver.querySelector('table')?.remove();
+    putToScoreTable(name, score)
+        .then(() => {
+            return buildScoreTableElement();
+        })
+        .then(table => {
+            formGameOver.querySelector('.score-table-container').append(table);
+        })
+        .finally(() => {
+            formGameOver.closest('.form-overlay').hidden = false;
+            placeInScreenCenter(formGameOver);
+        });
+});
+
+document.getElementById('maze').addEventListener('snake-grow', (event) => {
+    score = event.detail.score;
+    hiScore = score > hiScore ? score : hiScore;
+    size = event.detail.size;
+    updateIndicators(speed, score, hiScore, size);
+});
+
+setTimeout(updateInitialValues, 1000);
+
+function updateInitialValues () {
+    (async () => {
+        name = await getStorageItem('last-user-name', 'Anonymous');
+        speed = await getStorageItem('last-speed', '6');
+        hiScore = (await getScoreTable())[0]?.score ?? 0;
+        const colors = await getStorageItem('colors', {});
+        
+        formSettings.elements['input-username'].value = name;
+        formSettings.elements['input-speed'].value = speed;
+        
+        for (const elementName in colors) {
+            formSettings.elements[elementName].value = colors[elementName];
+            formSettings.elements[elementName].dispatchEvent(new Event('input'));
+        }
+        for (const element of formSettings.elements['settings-advanced'].querySelectorAll('input[type="text"]')) {
+            element.removeAttribute('disabled');
+        }
+        
+        formSettings.elements['input-username'].removeAttribute('disabled');
+        formSettings.elements['input-username'].focus();
+        formSettings.elements['input-speed'].removeAttribute('disabled');
+        formSettings.elements['btn-default-colors'].removeAttribute('disabled');
+        formSettings.elements['btn-play'].removeAttribute('disabled');
+        updateIndicators(speed, score, hiScore, size);
+    })();
+}
 
 function play(snake) {
     const formSettings = document.forms['form-settings'];

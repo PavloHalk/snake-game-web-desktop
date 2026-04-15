@@ -46,7 +46,6 @@ export default class Maze {
         const food = new Food(this.#randomInt(10, 120));
 
         while (true) {
-            //@todo: Exit cycle if there is no more space to place food.
             //@todo: Improve algorithm. Exclude cells with snake and food before choosing cell to put food. 
             
             const row = this.#randomInt(0, this.#rowsCount - 1);

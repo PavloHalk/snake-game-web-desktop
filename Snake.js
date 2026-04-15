@@ -10,6 +10,7 @@ export default class Snake {
     #vectorCol = 1;
     #maxRow = 0;
     #maxCol = 0;
+    #maxSize = 0;
     
     #grow = false;
     #isMoveInStep = false;
@@ -28,6 +29,7 @@ export default class Snake {
         this.setSpeed(speed);
         this.#maxRow = maze.getRowsCount() - 1;
         this.#maxCol = maze.getColsCount() - 1;
+        this.#maxSize = this.#maxRow * this.#maxCol - 2;
         
         this.#build(Math.floor(size));
         this.#maze.placeSnake(this);
@@ -69,7 +71,11 @@ export default class Snake {
     }
     
     #build(size = 1) {
-        //@todo: Throw error when maze is too small to place snake.
+        //@todo: Place snake at row center regardless to size. Currently only head is at the center. Body is at the left.
+        const maxSize = Math.floor(this.#maze.getColsCount() / 2);
+        if (maxSize < size) {
+            size = maxSize;
+        }
         
         for (let i = 0; i < size; i++) {
             const el = document.createElement('div');
@@ -130,7 +136,9 @@ export default class Snake {
         if (this.#grow) this.#growUp(tailRow, tailCol);
 
         this.#maze.checkFoods();
-        this.#maze.placeFoodInRandomTime();
+        if (this.#body.length < this.#maxSize) { // You are winner else.
+            this.#maze.placeFoodInRandomTime();
+        }
         
         this.#isMoveInStep = false;
     }
