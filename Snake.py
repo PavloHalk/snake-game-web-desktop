@@ -35,5 +35,4 @@ window = webview.create_window(
 
 webview.start(http_server=True, debug=False, user_agent='pywebview-client')
 
-# compilation to exe
-# pyinstaller --noconsole --onefile --add-data "snake.html;." --add-data "snake.css;." --add-data "app.js;." --add-data "favicon.ico;." --add-data "pyStorage.js;." --add-data "forms.js;." --add-data "csscolors.js;." --version-file=version.txt Snake.py --icon="favicon.ico"
+# Compilation to exe: see ./buildexe.py
